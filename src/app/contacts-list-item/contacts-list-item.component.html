@@ -1,0 +1,12 @@
+<div class="view row">
+          <div class="col-sm-8"> <h3>{{contact.name}}</h3>
+          <div class="row">
+            <div class="col-sm-2">{{contact.mobileNumber}}</div>
+            <div class="col-sm-2">{{contact.email}}</div>
+            <div class="col-sm-4">
+              <button class="glyphicon glyphicon-edit no-border" (click)="editContact(contact)" ></button>
+              <button class="glyphicon glyphicon-remove red no-border" (click)="removeContact(contact)" ></button>
+            </div>  
+          </div>
+          </div>
+</div>

@@ -1,0 +1,10 @@
+<section *ngIf="contacts.length > 0">
+    <ul class="contact-list list-group">
+      <li *ngFor="let contact of contacts" class="list-group-item" >
+        <app-contact-list-item
+        [contact]="contact"
+        (edit)="onEditContact($event)"
+        (remove)="onRemoveContact($event)"></app-contact-list-item>
+      </li>
+    </ul>
+</section>
