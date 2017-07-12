@@ -13,7 +13,8 @@ export class HomeComponent implements OnInit {
 
  private contactsService: ContactsService;
  private sharedService: SharedService;
-  
+
+  contacts: Contacts[] = [];  
   saveButton: string = "save";
   newContact: Contacts = new Contacts();
 
@@ -25,12 +26,22 @@ export class HomeComponent implements OnInit {
   addContact() {
     let editContactId = this.newContact.id;
     if(editContactId) {
-      this.contactsService.updateContactById(editContactId, this.newContact);
-      this.saveButton = "save";
+      this.contactsService
+      .updateContactById(editContactId, this.newContact)
+      .subscribe(function(){
+        this.saveButton = "save"; 
+        this.newContact = new Contacts();
+      });
     } else {
-      this.contactsService.addContact(this.newContact);
+      let self = this;
+      this.contactsService
+      .addContact(this.newContact)
+      .subscribe(function(){
+          self.contacts.push(self.newContact);
+          this.newContact = new Contacts();
+      });
     }
-    this.newContact = new Contacts();
+    
   }
 
   onEditContact(contact: Contacts) {
@@ -39,16 +50,23 @@ export class HomeComponent implements OnInit {
   }
 
   onRemoveContact(contact: Contacts) {
-    this.contactsService.deleteContactById(contact.id);
-  }
-
-  get contacts() {
-    this.sharedService.contacts = this.contactsService.getAllContacts();
-    return this.sharedService.contacts
+    this.contactsService
+      .deleteContactById(contact.id)
+      .subscribe(
+        (_) => {
+          this.contacts = this.contacts.filter((t) => t.id !== contact.id);
+        }
+      );
   }
 
   ngOnInit() {
-
+    this.contactsService
+      .getAllContacts()
+      .subscribe(
+        (contacts) => {
+          this.contacts = contacts;
+        }
+      );
   }
 
 }

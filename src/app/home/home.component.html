@@ -1,6 +1,6 @@
 <section class="col-md-12" >
     <div class="col-sm-6">
-      <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+      <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
         <input class="new-contact" name="name" placeholder="Full Name" autofocus="" [(ngModel)]="newContact.name" required>
         <input class="new-contact" name="mobileNumber" placeholder="Mobile No." autofocus="" [(ngModel)]="newContact.mobileNumber" >
         <input class="new-contact" name="email" placeholder="Email" autofocus="" [(ngModel)]="newContact.email">

@@ -14,6 +14,8 @@ import { ContactsListItemComponent } from './contacts-list-item/contacts-list-it
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { ApiService } from './services/api.service';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,7 @@ import { RegisterComponent } from './register/register.component';
     HttpModule,
     routing
   ],
-  providers: [ContactsService],
+  providers: [ContactsService, ApiService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

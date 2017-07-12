@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Contacts } from '../models/contacts';
+import { ApiService } from './api.service';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ContactsService {
@@ -7,44 +9,31 @@ export class ContactsService {
 
   contactsArr: Contacts[] = [];
 
-  constructor() { }
+  constructor(private api: ApiService) { }
 
   // Simulate POST /contactsArr
-  addContact(contacts: Contacts): ContactsService {
-    if (!contacts.id) {
-      contacts.id = ++this.lastId;
-    }
-    this.contactsArr.push(contacts);
-    return this;
+  addContact(contacts: Contacts): Observable<Contacts> {
+    return this.api.createContacts(contacts);
   }
 
   // Simulate DELETE /contactsArr/:id
-  deleteContactById(id: number): ContactsService {
-    this.contactsArr = this.contactsArr
-      .filter(contacts => contacts.id !== id);
-    return this;
+  deleteContactById(id: number): Observable<Contacts> {
+    return this.api.deleteContactsById(id);
   }
 
   // Simulate PUT /contactsArr/:id
-  updateContactById(id: number, values: Object = {}): Contacts {
-    let contacts = this.getContactById(id);
-    if (!contacts) {
-      return null;
-    }
-    Object.assign(contacts, values);
-    return contacts;
+  updateContactById(id: number, values: Contacts): Observable<Contacts> {
+    return this.api.updateContacts(id, values);
   }
 
   // Simulate GET /contactsArr
-  getAllContacts(): Contacts[] {
-    return this.contactsArr;
+  getAllContacts(): Observable<Contacts[]> {
+     return this.api.getAllContacts();
   }
 
   // Simulate GET /contactsArr/:id
-  getContactById(id: number): Contacts {
-    return this.contactsArr
-      .filter(contacts => contacts.id === id)
-      .pop();
+  getContactById(id: number): Observable<Contacts>  {
+    return this.api.getContactsById(id);
   }
 
 }
